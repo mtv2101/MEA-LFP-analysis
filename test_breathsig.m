@@ -1,4 +1,4 @@
-function [sig_breaths,sig_vals,cis,all_spec] = test_breathsig_081109(spec_norm,brthindx,g_freqs,sigtype);
+function [sig_breaths,sig_vals,cis,all_spec] = test_breathsig(spec_norm,brthindx,g_freqs,sigtype);
 
 baseline = find(brthindx <= 0); %get all breaths before stimilus (stim triggered on breath 0, so event occurs on next breath)
 signal = find(brthindx >= 1); %get all breaths after stimilus

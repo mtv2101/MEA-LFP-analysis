@@ -1,4 +1,4 @@
-function [spectrogram t f] = pmtm_080709(wave,Fs,maxfreq)
+function [spectrogram t f] = pmtm_cust(wave,Fs,maxfreq)
 %This function takes a multiple wave vectors, each coming fom a trial of
 %the same stimilus, and outputs the max gamma oscillatory power during each
 %trial, along with the time and fequency scales of the pmtm analysis

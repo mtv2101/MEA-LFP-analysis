@@ -1,4 +1,4 @@
-function [spec_norm aveallgamma allgamma] = pmtmprocess_080909(spec,f,brthindx,base_mode,g_freqs);
+function [spec_norm aveallgamma allgamma] = pmtmprocess(spec,f,brthindx,base_mode,g_freqs);
 % spec = (time, freq, trial, breath, channel(n))
 
 spec = spec+100; %shift all values positive to avoid taking log of neg number

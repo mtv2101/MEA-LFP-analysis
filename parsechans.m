@@ -1,4 +1,4 @@
-function [wave_segs] = parsechans_080709(rawwave,events,breaths,srate,eventcode,brth_num,winsize)
+function [wave_segs] = parsechans(rawwave,events,breaths,srate,eventcode,brth_num,winsize)
 %INPUTS:
 % -- "events" matrix containing vectors with event time(in sec) 1st dim,
 %    event code ("1,2,3"...etc) 2nd dim
