@@ -52,20 +52,20 @@ cols = 4;
 %     end
 % end
 
-% for x=1:rows
-%     for y=1:cols
-%         indx = empirical_map(x,y);
-%         subplot(rows,cols,(x*cols)-cols+y,'align');
-%         imagesc(aveallgamma(:,:,indx));
-%     end
-% end
-
 for x=1:rows
     for y=1:cols
         indx = empirical_map(x,y);
-        remap_b3(x,y) = a(indx);
+        subplot(rows,cols,(x*cols)-cols+y,'align');
+        imagesc(aveallgamma(:,:,indx));
     end
 end
+
+% for x=1:rows
+%     for y=1:cols
+%         indx = empirical_map(x,y);
+%         remap_b3(x,y) = a(indx);
+%     end
+% end
 
 %%final assumed site mapping %%
 % 5     2      31 30 
