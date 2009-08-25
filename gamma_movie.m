@@ -1,15 +1,23 @@
+function [M] = gamma_movie(g_freqs,aveallgamma);
+
 rows = 8;
 cols = 4;
-% winsize = .5; %size in s of fft analysis window
-% time_scale = (size(spec_norm,1))/winsize; %sample rate Hz
-% 
+winsize = .5; %size in s of fft analysis window
+time_scale = (size(aveallgamma,1))/winsize; %sample rate Hz
+sparsen_factor = 2;
+slow_rate = 2; %slow down real time by this factor
+playback_rate = time_scale/(sparsen_factor*slow_rate);
+
 % gammadata = squeeze(mean(spec_norm(:,g_freqs,:,:,:),2)); %ave over gamma
 % gammadata = squeeze(mean(gammadata,2)); %ave over trials .. gammadata[time,breath,chan)
 
-for i=1:size(gammadata,3) %for all channels
-    a = gammadata(:,:,i);
+for i=1:size(aveallgamma,3) %for all channels
+    a = aveallgamma(:,:,i);
     movie_mat(:,i) = a(:);
 end
+
+sparsenv = 1:sparsen_factor:size(movie_mat,1);
+movie_mat2 = movie_mat(sparsenv,:);
 
 empirical_map = [5, 2,31,30;...
                 16,11,20,17;...
@@ -23,7 +31,7 @@ empirical_map = [5, 2,31,30;...
 for x=1:rows
     for y=1:cols
         indx = empirical_map(x,y);
-        remap_movie(:,x,y) = movie_mat(:,indx);
+        remap_movie(:,x,y) = movie_mat2(:,indx);
     end
 end
 
@@ -33,4 +41,6 @@ for k = 2:nframes
     h = imagesc(squeeze(remap_movie(k,:,:)));
     M(k) = getframe;
 end
-movie(M,1,time_scale);
+movie(M,1,playback_rate);
+
+end

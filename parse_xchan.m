@@ -1,10 +1,9 @@
 clear all;
-
 % Define Global VARS
 srate = 3051.76;  %Hz
-eventcode = 3;
+eventcode = 2;
 winsize = .5;
-brthindx = [-10:1:30];
+brthindx = [-5:1:5];
 maxfreq = 200;
 sigtype = 0;
 base_mode = 0; % 0 = normalizes to average baseline power in each band individaully
