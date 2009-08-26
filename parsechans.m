@@ -11,8 +11,8 @@ function [wave_segs] = parsechans(rawwave,events,breaths,srate,eventcode,brth_nu
 %   eventcode - code of events to extract
 
 seek_time = (winsize/2)*srate; %time (samples) to seek forward (or beackward) from a breath
-%seek_offset = .2*srate; %time (seconds) to forward offset window in time
-seek_offset = -.1*srate;
+seek_offset = .2*srate; %time (seconds) to forward offset window in time
+%seek_offset = -.3*srate;
 
 tdt_allevents(:,1) = (events(:,1)*srate);
 tdt_allevents(:,2) = events(:,2);

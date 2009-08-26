@@ -53,7 +53,7 @@ for odor = 2:5;
         g_freqs = find(f>50 & f<100);
         disp('site'); disp(n);
         [spec_norm(:,:,:,:,n) aveallgamma(:,:,n) allgamma(:,:,:,n)] = pmtmprocess(spec(:,:,:,:),f,brthindx,base_mode,g_freqs);
-        [sig_breaths(:,:,n),sig_vals(:,:,n),cis(:,:,:,n),all_spec(:,:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
+        [sig_breaths(:,:,chan),sig_vals(:,:,vn),cis(:,:,:,n),all_spec(:,:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
     end
     save(['spec_norm_odor' num2str(odor)], 'spec_norm');
     clear spec_norm;
