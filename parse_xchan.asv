@@ -3,9 +3,9 @@ clear all;
 srate = 3051.76;  %Hz
 %eventcode = 2;
 winsize = .5;
-brthindx = [-10:1:30];
+brthindx = [-10:1:20];
 maxfreq = 200;
-dead_chans = [0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0];
+dead_chans = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0];
              %1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2   
 %sigtype = 0; %0 gives mean power, 1 gives max power
 base_mode = 0; % 0 = normalizes to average baseline power in each band individaully
@@ -37,7 +37,7 @@ end
 cd(pathname);
 datafile = datafile([2:32 1]); %fix uigetfile bug, 32chan
 
-for odor = 2:5;
+for odor = 1:5;
     eventcode = odor;
     for n = 1:length(datafile); %n to number of channels 
         if dead_chans(n)==1
@@ -53,7 +53,7 @@ for odor = 2:5;
         g_freqs = find(f>50 & f<100);
         disp('site'); disp(n);
         [spec_norm(:,:,:,:,n) aveallgamma(:,:,n) allgamma(:,:,:,n)] = pmtmprocess(spec(:,:,:,:),f,brthindx,base_mode,g_freqs);
-        [sig_breaths(:,:,chan),sig_vals(:,:,vn),cis(:,:,:,n),all_spec(:,:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
+        [sig_breaths(:,:,n),sig_vals(:,:,n),cis(:,:,:,n),all_spec(:,:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
     end
     save(['spec_norm_odor' num2str(odor)], 'spec_norm');
     clear spec_norm;

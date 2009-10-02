@@ -1,5 +1,5 @@
-channel = 18;
-breath = 10;
+channel = 8;
+breath = 12;
 breath2 = 13;
 
 checked_waves(:,:,1) = wave_segs(:,:,breath,channel);

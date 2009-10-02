@@ -1,8 +1,8 @@
-baseline_indx = find(brthindx <= 0);
-channel = 18;
+%baseline_indx = find(brthindx <= 0);
+channel = 8;
 breath1 = 13;
 breath2 = 10;
-g_freqs = find(f>45 & f<100);
+g_freqs = find(f>50 & f<100);
 
 aa = squeeze(spec_norm(:,:,:,breath1,channel));
 a = mean(aa,3)';
@@ -22,8 +22,8 @@ b_freq = mean(b,2);
 %     c(i,:) = scalef(i).*(b(i,:));    
 % end
 
-subplot(2,1,1);imagesc (t,f(g_freqs),b(g_freqs,:),[-.1 .65]);
-subplot(2,1,2);imagesc (t,f(g_freqs),a(g_freqs,:),[-.1 .65]);
+subplot(2,1,1);imagesc (t,f(g_freqs),b(g_freqs,:),[-.1 2]);
+subplot(2,1,2);imagesc (t,f(g_freqs),a(g_freqs,:),[-.1 2]);
 %subplot(3,1,3);semilogy(a_freq,'-r');hold on;semilogy(b_freq,'-k');
 figure(gcf)
 %imagesc (t,f,a); figure(gcf)

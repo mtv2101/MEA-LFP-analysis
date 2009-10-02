@@ -11,12 +11,11 @@ empirical_map = [5, 2,31,30;...
 numodors = size(sig_breaths_allodors,3);
 rows = 8;
 cols = 4;
-%order_concs = [1 5 4 3 2]; %order of concentrations (event types) from low to high
-
+order_
 
 sum_sigs = squeeze(sum(sig_breaths_allodors(:,2,:,:),1)); %sig_breaths_allodors dimensions (breaths,sigtype,channel,event_type)
 
-% 
+
 % for i=1:numodors
 %     for x=1:rows
 %         for y=1:cols

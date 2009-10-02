@@ -56,6 +56,6 @@ for x=1:rows
     for y=1:cols
         indx = empirical_map(x,y);
         subplot(rows,cols,(x*cols)-cols+y,'align');
-        imagesc(aveallgamma1(:,:,indx));
+        imagesc(aveallgamma(:,:,indx));
     end
 end

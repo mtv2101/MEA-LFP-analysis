@@ -1,3 +1,5 @@
+%run this on waveform of breaths
+
 kernal = [1 1 1 1 1 1 1 1 1 1];
 resp = conv(resp,kernal);
 [MAXTAB, MINTAB] = peakdet(resp, 10);
