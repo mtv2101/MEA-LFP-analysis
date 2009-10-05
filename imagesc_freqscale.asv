@@ -1,0 +1,7 @@
+function imagesc_freqscale(image)
+
+for i=1:size(image,2) %2nd dim should be frequency (columns)
+   dyn_range = max(iamge,[],1)-min(image,[],1);
+   
+end
+end

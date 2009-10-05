@@ -1,5 +1,5 @@
-channel = 8;
-breath = 12;
+channel = 9;
+breath = 10;
 breath2 = 13;
 
 checked_waves(:,:,1) = wave_segs(:,:,breath,channel);
@@ -22,7 +22,7 @@ for i=1:2:size(checked_waves,2)*2 %for each trial
         set(gca,'xticklabel',[]);
         xlabel = 'off';
     else
-        xlabel = [0 winsize];
+        xlabel = [0 winsize/srate];
     end    
     a=a+1;
 end

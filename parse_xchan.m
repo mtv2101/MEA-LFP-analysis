@@ -2,9 +2,9 @@ clear all;
 % Define Global VARS
 srate = 3051.76;  %Hz
 %eventcode = 2;
-winsize = .5;
+winsize = .7;
 brthindx = [-10:1:20];
-maxfreq = 200;
+maxfreq = 120;
 dead_chans = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
              %1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2   
 %sigtype = 0; %0 gives mean power, 1 gives max power
@@ -57,6 +57,9 @@ for odor = 1:5;
     end
     save(['spec_norm_odor' num2str(odor)], 'spec_norm');
     clear spec_norm;
+    save(['spec_odor' num2str(odor)], 'spec');
+    clear spec;
+    save(['wave_segs' num2str(odor)], 'wave_segs');
     aveallgamma_allodors(:,:,:,odor) = aveallgamma;
     sig_breaths_allodors(:,:,:,odor) = sig_breaths;
 end

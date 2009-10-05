@@ -52,10 +52,12 @@ cols = 4;
 %     end
 % end
 
+gam_max = max(max(max(aveallgamma)));
+gam_min = min(min(min(aveallgamma)));
 for x=1:rows
     for y=1:cols
         indx = empirical_map(x,y);
         subplot(rows,cols,(x*cols)-cols+y,'align');
-        imagesc(aveallgamma(:,:,indx));
+        imagesc(aveallgamma(:,:,indx), [gam_min gam_max]);
     end
 end
