@@ -52,18 +52,14 @@ cols = 4;
 %     end
 % end
 
-aveallgamma_sigs = aveallgamma;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths); %concatenate significance binaries to specs
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
-
+aveallgamma_sigs = zeros(size(aveallgamma,1)+1, size(aveallgamma,2)
+[aveallgamma;squeeze(sig_breaths)];
 gam_max = max(max(max(aveallgamma)));
 gam_min = min(min(min(aveallgamma)));
 for x=1:rows
     for y=1:cols
         indx = empirical_map(x,y);
         subplot(rows,cols,(x*cols)-cols+y,'align');
-        imagesc(aveallgamma_sigs(:,:,indx), [gam_min gam_max]);
+        imagesc(aveallgamma(:,:,indx), [gam_min gam_max]);
     end
 end

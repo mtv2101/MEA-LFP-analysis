@@ -19,11 +19,11 @@ elseif base_mode == 1 %base_mode=1 normalizes to average baseline power in each 
             a = squeeze(mean(spec(:,i,:,:),1)); %average power for each frequency band (ave over time)
             b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
             fmean(i) = mean(b); %average over all trials
-        spec_norm(:,i,:,:) = 10.*(log10(spec(:,i,:,:)./fmean(i))); %normalize freq band to ave power of baseline of all trials - express as dB change
+        spec_norm(:,i,:,:) = 10.*(log10(spec_norm(:,i,:,:)./fmean(i))); %normalize freq band to ave power of baseline of all trials - express as dB change
             c = squeeze(mean(spec_norm(:,i,:,:),1)); %average power for each frequency band (ave over time)
             d = squeeze(mean(c(:,baseline),2)); %average this over baseline breaths
-            fnorm_mean(i) = mean(d); %average over all trials
-        spec_norm(:,i,:,:) = spec_norm(:,i,:,:)-fnorm_mean(i); %subtract average of baseline region per freq, bring baseline average to zero
+            fmean(i) = mean(d); %average over all trials
+        spec_norm(:,i,:,:) = spec_norm(:,i,:,:)-fmean(i); %subtract average of baseline region per freq, bring baseline average to zero
     end
 
 elseif base_mode == 2 %base_mode=2 normalizes to max baseline power of all gamma freq bands
