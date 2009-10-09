@@ -1,12 +1,13 @@
-function [spec_norm aveallgamma fmean] = pmtmprocess(spec,f,brthindx,base_mode,g_freqs);
+function [spec_norm aveallgamma chan_mean] = pmtmprocess(spec,f,brthindx,base_mode,g_freqs);
 % spec = (time, freq, trial, breath, channel(n))
 
-spec = spec+100; %shift all values positive to avoid taking log of neg number
+%spec = spec+100; %shift all values positive to avoid taking log of neg number
 baseline = find(brthindx <= 0); %get all breaths before stimilus (stim triggered on breath 0, so event occurs on next breath)
 signal = find(brthindx >= 1); %get all breaths after stimilus
 %% Normalize Spectral density by frequency (over all trials), expresses as Db
 
 if base_mode == 0 %base_mode=0 normalizes to average baseline power in each band individaully
+    spec = spec+100;
     for i=1:size(spec,2); %iterate over frequency dim
         a = squeeze(mean(spec(:,i,:,:),1)); %average power for each frequency band (ave over time)
         b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
@@ -15,6 +16,10 @@ if base_mode == 0 %base_mode=0 normalizes to average baseline power in each band
     end
 
 elseif base_mode == 1 %base_mode=1 normalizes to average baseline power in each band individaully, and sets all baseline specs to zero
+    for c=1:size(spec,5);
+        chan_mean(c) = squeeze(mean(mean(mean(mean(spec(:,g_freqs,:,baseline,c),4),3),2),1));
+        spec(:,:,:,:,c) = spec(:,:,:,:,c)-chan_mean(c)+100;
+    end
     for i=1:size(spec,2); %iterate over frequency dim
             a = squeeze(mean(spec(:,i,:,:),1)); %average power for each frequency band (ave over time)
             b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
@@ -27,6 +32,7 @@ elseif base_mode == 1 %base_mode=1 normalizes to average baseline power in each 
     end
 
 elseif base_mode == 2 %base_mode=2 normalizes to max baseline power of all gamma freq bands
+    spec = spec+100;
     for i=1:size(spec,2); %iterate over frequency dim
         a = squeeze(max(spec(:,i,:,:),[],1)); %maximum power for each frequency band (ave over time)
         b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
@@ -36,6 +42,7 @@ elseif base_mode == 2 %base_mode=2 normalizes to max baseline power of all gamma
     spec_norm(:,:,:,:) = 10.*(log10(spec(:,g_freqs,:,:)./fmean_gamma)); % express as dB change
 
 elseif base_mode == 3 %base_mode=3 normalizes to max baseline power averaged over gamma freq bands
+    spec = spec+100;
     for i=1:size(spec,2); %iterate over frequency dim
         a = squeeze(max(spec(:,i,:,:),[],1)); %maximum power for each frequency band (ave over time)
         b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
@@ -45,6 +52,7 @@ elseif base_mode == 3 %base_mode=3 normalizes to max baseline power averaged ove
     spec_norm(:,:,:,:) = 10.*(log10(spec(:,g_freqs,:,:)./fmean_gamma)); % express as dB change
 
 elseif base_mode == 4 %base_mode=4 normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range
+    spec = spec+100;
     for i=1:size(spec,2); %iterate over frequency dim
         a = squeeze(mean(mean(spec,4),3)); %average power for each frequency band (ave over time)
         fmean(i) = squeeze(mean(a(i,baseline),2)); %average this over baseline breaths
@@ -55,6 +63,7 @@ elseif base_mode == 4 %base_mode=4 normalizes to average baseline power in each 
     end
 
 elseif base_mode == 5 %base_mode=5 normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range after db normalization
+    spec = spec+100;
     for i=1:size(spec,2); %iterate over frequency dim
         a = squeeze(mean(mean(spec,4),3)); %average power for each frequency band (ave over time)
         fmean(i) = squeeze(mean(a(i,baseline),2)); %average this over baseline breaths

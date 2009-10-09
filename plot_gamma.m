@@ -53,10 +53,10 @@ cols = 4;
 % end
 
 aveallgamma_sigs = aveallgamma;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths); %concatenate significance binaries to specs
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
-aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = sig_breaths;
+% aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths); %concatenate significance binaries to specs
+% aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths);
+% aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths);
+% aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths);
 
 gam_max = max(max(max(aveallgamma)));
 gam_min = min(min(min(aveallgamma)));
