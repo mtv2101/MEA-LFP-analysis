@@ -40,6 +40,7 @@ end
     'prompt', 'Select all .mat files from MEA channels', 'output', 'cell');
 
 for odor = eventcodes;
+    disp('odor'); disp(odor);
     for n = 1:length(pathname); %n to number of selected channels 
         if dead_chans(n)==1
             continue 
@@ -49,16 +50,16 @@ for odor = eventcodes;
             wave_segs(:,:,x,n) = parsechans(wave,events,breaths,srate,odor,brthindx(x),winsize,eventcodes);
             [S, t, f] = pmtm_cust(squeeze(wave_segs(:,:,x,n)),srate,maxfreq);
             spec(:,:,:,x) = S; clear S; %spec = (time, freq, trial, breath)
-            disp('breath'); disp(x);
+            %disp('breath'); disp(x);
         end
         g_freqs = find(f>50 & f<100);
         disp('site'); disp(n);
         spec_all(:,:,:,:,n) = spec;
-        [spec_norm(:,:,:,:,n) aveallgamma(:,:,n)] = pmtmprocess_111709(spec,f,brthindx,base_mode,g_freqs);
-        [sig_breaths(:,:,n),sig_vals(:,:,n),cis(:,:,:,n),all_spec(:,:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
+        [spec_norm(:,:,:,:,n) aveallgamma(:,:,n)] = pmtmprocess(spec,f,brthindx,base_mode,g_freqs);
+        [sig_breaths(:,n),sig_vals(:,n),cis(:,:,n),all_spec(:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
     end
     aveallgamma_allodors(:,:,:,odor) = aveallgamma;
-    sig_breaths_allodors(:,:,:,odor) = sig_breaths;
+    sig_breaths_allodors(:,:,odor) = sig_breaths;
     save(['spec_odor' num2str(odor)], 'spec_all');
     clear spec_all;
     save(['spec_norm_odor' num2str(odor)], 'spec_norm');

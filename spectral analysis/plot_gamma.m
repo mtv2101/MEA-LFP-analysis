@@ -18,7 +18,7 @@ tdt_map = [8,16,24,32;...
 
 rows = 8;
 cols = 4;
-odor = 5;
+odor = 2;
 % maxes = squeeze(max(aveallgamma,[],1));
 % baseline = find(brthindx <= 0);
 % base = mean(maxes(baseline,:),1);
@@ -34,7 +34,7 @@ odor = 5;
 % end
 
 aveallgamma = aveallgamma_allodors(:,:,:,odor);
-sig_breaths = sig_breaths_allodors(:,:,:,odor);
+sig_breaths = sig_breaths_allodors(:,:,odor);
 
 aveallgamma_sigs = aveallgamma;
  aveallgamma_sigs(size(aveallgamma_sigs,1)+1,:,:) = squeeze(sig_breaths); %concatenate significance binaries to specs

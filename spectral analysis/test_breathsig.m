@@ -20,7 +20,7 @@ if n == 1
     all_max = squeeze(max(spec_norm(:,g_freqs,:,:),[],1));
     all_gmax = squeeze(max(all_max,[],1));
     for i=1:size(all_gmax,2) %for each breath
-        [sig_breaths(i,n),sig_vals(i,n),cis(i,:,n)] = ttest2(all_gmax(:,i),base_gmax(:),.05,'both'); %do two-tailed t-test
+        [sig_breaths(i),sig_vals(i),cis(i,:)] = ttest2(all_gmax(:,i),base_gmax(:),.05,'both'); %do two-tailed t-test
     end
     all_spec = all_gmax;
 end
