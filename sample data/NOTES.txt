@@ -1,0 +1,10 @@
+This sample data was taken from an experiment on April 7th 2010
+27.0g C57 male mouse given Isoflourane anesthesia
+4x8 32chan MEA inserted in medial mitral cell layer
+This data has 3 events.  
+code 1 = DMSO headspace 2sec pulse at 1L/min
+code 2 = odor mixture BzB 300mM 2sec pulse at 1L/min
+code 3 = odor mixture MA 300mM 2sec pulse at 1L/min
+each data file is from independent channel of the array
+spike data includes all threshold crossings (>5sd) - these spikes are NOT sorted
+ - matt valley 041210
