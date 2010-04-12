@@ -1,6 +1,7 @@
 clear all;
 
 % Define Global VARS
+eventcodes = [1 2 3];
 srate = 3051.76;  %Hz
 winsize = .5;
 brthindx = [-10:1:20];;
@@ -35,22 +36,17 @@ for n = 1:length(datafile);
 end
 
 % sequentially open all channels
-[datafile, pathname] = uigetfile(...
-    '*.mat',...
-    'Please pick a wave files for each ',...
-    'MultiSelect', 'on');
-cd(pathname);
-datafile = datafile([2:32 1]); %fix uigetfile bug, 32chan
+[pathname] = uipickfiles('refilter', '\.mat$', 'type', {'*.mat', 'MAT-files'},...
+    'prompt', 'Select all .mat files from MEA channels', 'output', 'cell');
 
-for odor = 1:5;
-    eventcode = odor;
-    for n = 1:length(datafile); %n to number of channels 
+for odor = eventcodes;
+    for n = 1:length(pathname); %n to number of selected channels 
         if dead_chans(n)==1
             continue 
         end
-        load(datafile{n}); % name of array must be "wave"
+        load(pathname{n}); % name of array must be "wave"
         for x = 1:length(brthindx) %x to num of breaths
-            wave_segs(:,:,x,n) = parsechans(wave,events,breaths,srate,eventcode,brthindx(x),winsize);
+            wave_segs(:,:,x,n) = parsechans(wave,events,breaths,srate,odor,brthindx(x),winsize,eventcodes);
             [S, t, f] = pmtm_cust(squeeze(wave_segs(:,:,x,n)),srate,maxfreq);
             spec(:,:,:,x) = S; clear S; %spec = (time, freq, trial, breath)
             disp('breath'); disp(x);
