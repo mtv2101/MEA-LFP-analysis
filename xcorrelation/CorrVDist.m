@@ -1,4 +1,4 @@
-function[corrs_distances]= CorrVDist(Corr_Per_Breath,coordinates,FirstChannel,LastChannel,ReferenceChannel,DeadChannel,Breath)
+function[corrs_distances]= CorrVDist(Corr_Per_Breath,coordinates,FirstChannel,LastChannel,ReferenceChannel,DeadChannel)
 
 %this is the function that plots correlation vs distance per specific
 %reference channel. Final version. It uses the corr _Per_ Breath output
@@ -26,7 +26,7 @@ end
 
 [distance_Chagit]=distcalc_perchan(coordinates,FirstChannel, LastChannel, ReferenceChannel,DeadChannel);    %calculates distance with respect to reference channel
 unique_final_distance=unique(distance_Chagit);          %unique all the distances
-unique_corrs = squeeze(Corr_Per_Breath(ReferenceChannel,:,Breath));
+unique_corrs = squeeze(Corr_Per_Breath(ReferenceChannel,:));
 
 for i=1:length(unique_final_distance)
     a=find(unique_final_distance(i)==distance_Chagit);                            %find where distance equal all the successive unique distances

@@ -1,4 +1,4 @@
-function [wave_segs] = parsechans(rawwave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
+function [wave_segs] = parsechans(wave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
 
 %INPUTS:
 % -- "events" matrix containing vectors with event time(in sec) 1st dim,
@@ -24,7 +24,7 @@ if max(sel_events,[],1) == size(events,1); % don't pick last trial (this leads t
     sel_events = sel_events(1:(length(sel_events)-1)); %cut out last event because the experiment is often ended before a sufficient number of breaths are recorded after this event
 end
 
-for a = 1:length(eventcodes);
+for a = eventcodes;
     b = find(tdt_allevents(:,2) == a);
     c(a) = length(b);
     clear b;
@@ -50,6 +50,6 @@ for i=1:min_trials; %arbitrary number of trials
     if i==1;
         win_final = winend-winstart; %a bug occurs rarely where the int32 of the window creates a size mismatch between trials.  "winfinal" is the template size to maintain over all trials.
     end  
-    wave_segs(:,i) = rawwave(winstart:(winstart+win_final));
+    wave_segs(:,i) = wave(winstart:(winstart+win_final));
 end
 end
