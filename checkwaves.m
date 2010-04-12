@@ -1,7 +1,10 @@
-channel_one = 23;
-channel_two = 8;
-breath = 10;
-breath2 = 13;
+channel_one = 5;
+channel_two =6;
+breath = 14;
+breath2 = 3;
+
+srate = 3051.76;  %Hz
+winsize = .5;
 
 checked_waves(:,:,1) = wave_segs(:,:,breath,channel_one);
 checked_waves(:,:,2) = wave_segs(:,:,breath,channel_two);

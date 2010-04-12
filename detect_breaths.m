@@ -12,7 +12,7 @@ end
 breath_srate = 305.176;
 kernal = [1 1 1 1 1 1 1 1 1 1];
 resp = conv(resp,kernal);
-[MAXTAB, MINTAB] = peakdet(resp, 6);
+[MAXTAB, MINTAB] = peakdet(resp, 7);
 breaths = MINTAB(:,1)/breath_srate;
 
 for i = 1:length(breaths)-1

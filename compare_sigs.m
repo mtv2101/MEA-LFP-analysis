@@ -1,12 +1,11 @@
-% empirical map collected on July 1-2 by Armen and Matt by systematically pulling electrode out of solution one electrode at a time.  
-empirical_map = [5, 2,31,30;...
-                16,11,20,17;...
-                 4, 9,29,19;... %4 is dead
-                 7,12,18,32;... %12 may equal 14
-                 3, 6,27,28;...
-                14,13,22,21;... %14 may equal 12
-                15, 8,23,26;...
-                10, 1,24,25]; 
+tdt_map = [8,16,24,32;...
+    7,15,23,31;...
+    6,14,22,30;...
+    5,13,21,29;...
+    4,12,20,28;...
+    3,11,19,27;...
+    2,10,18,26;...
+    1,9,17,25];
 
 numodors = size(sig_breaths_allodors,3);
 rows = 8;
@@ -14,7 +13,7 @@ cols = 4;
 %order_concs = [1 5 4 3 2]; %order of concentrations (event types) from low to high
 
 
-sum_sigs = squeeze(sum(sig_breaths_allodors(:,2,:,:),1)); %sig_breaths_allodors dimensions (breaths,sigtype,channel,event_type)
+sum_sigs = squeeze(sum(sig_breaths_allodors(:,:,:,:),1)); %sig_breaths_allodors dimensions (breaths,sigtype,channel,event_type)
 
 % 
 % for i=1:numodors
@@ -30,7 +29,7 @@ sum_sigs = squeeze(sum(sig_breaths_allodors(:,2,:,:),1)); %sig_breaths_allodors 
 
 for x=1:rows
     for y=1:cols
-        indx = empirical_map(x,y);
+        indx = tdt_map(x,y);
         subplot(rows,cols,(x*cols)-cols+y,'align');
         plot(sum_sigs(indx,:));
     end
