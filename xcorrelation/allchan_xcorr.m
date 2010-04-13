@@ -20,37 +20,35 @@ function[channel_correlations,channel_correlations_average,base_breaths_channel_
 %FirstEventBreath and LastEventBreath=first and last specified event
 %breaths
 
-data_filtered= filter_data(data,sampFreq,filttype,filtorder);
+data_filtered = filter_data(data,sampFreq,filttype,filtorder);
 
-for breath=1:length(data(1,1,:,1))     %go over all breaths
-    for event=1:length(data(1,:,1,1))      %go through all events
-        %[specificbreath_per_event_corr]=Specific_breath_per_event(data_filtered,event,breath); %mtv doesn't see the point of this function
-        [specificbreath_per_event_corr] = squeeze(data_filtered(:,event,breath,:));
-        [newA1_channel]= remap(specificbreath_per_event_corr,FirstChannel,LastChannel) ;      %reorders the mapping
-        finalcorr11 = xcorr(newA1_channel,'coeff');
-        [qq,ww]=size(newA1_channel);         
+for breath = 1:length(data(1,1,:,1))     %go over all breaths
+    for event = 1:length(data(1,:,1,1))      %go through all events
+        wavseg = squeeze(data_filtered(:,event,breath,:));
+        finalcorr = xcorr(wavseg,'coeff');
+        [qq,ww]=size(wavseg);         
         m=1;
-        for x=1:((LastChannel-FirstChannel)+1)                                                     % we are referencing every channels correlation into a separated third dimension
-            newmatrix(:,:,x)   = finalcorr11(:,(m):(m+(LastChannel-FirstChannel)));
+        for x=1:size(data,4)   % we are referencing every channels correlation into a separated third dimension
+            newmatrix(:,:,x) = finalcorr(:,(m):(m+(LastChannel-FirstChannel)));
             m=m+((LastChannel-FirstChannel)+1);
-        end                                                         %for zerolag correlations
-        for y=1:32
-            channel_correlations(y,event)=newmatrix(qq,y,reference_channel);                   %go through all the events and find correlations at zerolag
+        end                           %for zerolag correlations
+        for y=1:size(data,4)
+            channel_correlations(y,event) = newmatrix(qq,y,reference_channel);  %go through all the events and find correlations at zerolag
         end
     end
-    channel_correlations_average(:,breath)=mean(channel_correlations,2);              %take the average across events per breath
+    channel_correlations_average(:,breath) = mean(channel_correlations,2);      %take the average across events per breath
 end
 
-for rr=FirstBaseBreath:LastBaseBreath                                                                      %go through base breaths
+for rr=FirstBaseBreath:LastBaseBreath                                         %go through base breaths
     important_variable_two=FirstBaseBreath-1;
     base_breaths_channel_correlations(:,rr-important_variable_two)=channel_correlations_average(:,rr);
 end
 base_breaths_average=mean(base_breaths_channel_correlations,2);                 %plot this, average of base breaths correlation
-for xx=FirstEventBreath:LastEventBreath                                                                     %go through all event breaths
-    important_variable=FirstEventBreath-1;                                                    %for indexing purposes
+for xx=FirstEventBreath:LastEventBreath                                         %go through all event breaths
+    important_variable=FirstEventBreath-1;                                      %for indexing purposes
     event_breaths_channel_correlations(:,xx-important_variable)=channel_correlations_average(:,xx);
 end
-event_breaths_average=mean(event_breaths_channel_correlations,2);                %plot this, average of event breaths correlation
+event_breaths_average=mean(event_breaths_channel_correlations,2);               %plot this, average of event breaths correlation
 
 channels=[1:32];
 channels=channels';

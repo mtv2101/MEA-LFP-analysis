@@ -3,7 +3,7 @@ function[corrs_distances]= CorrVDist(Corr_Per_Breath,coordinates,FirstChannel,La
 %this is the function that plots correlation vs distance per specific
 %reference channel. Final version. It uses the corr _Per_ Breath output
 %from xcorr_alltoall function and the function called
-%distance_calculation_per_channel_sep25. In order to run this, it is
+%distcalc_perchan. In order to run this, it is
 %necessary to run the xcorr_alltoall function first and obtain
 %the output. 
 %Corr_Per_Breath=the output from CorrelationVsDistanceSep25 function,
