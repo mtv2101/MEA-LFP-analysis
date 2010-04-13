@@ -15,7 +15,7 @@ else
     important_variable=0;
 end
 
-for j=ReferenceChannel,
+j=ReferenceChannel,
     for  n=FirstChannel:LastChannel,
         if ((all(n~=DeadChannel)==1) && ((all(j~=DeadChannel)==1)))
             distance_Chagit(:,n-important_variable,1) = sqrt(...
@@ -24,4 +24,3 @@ for j=ReferenceChannel,
             distance_Chagit(:,n-important_variable,j-important_variable)=-1;%set all deadchannel distances to be -1
         end
     end
-end

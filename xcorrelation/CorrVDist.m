@@ -25,15 +25,16 @@ if ((DeadChannel<=LastChannel) & (DeadChannel>=FirstChannel))
 end
 
 [distance_Chagit]=distcalc_perchan(coordinates,FirstChannel, LastChannel, ReferenceChannel,DeadChannel);    %calculates distance with respect to reference channel
-unique_final_distance=unique(distance_Chagit);          %unique all the distances
+unique_final_distance=unique(distance_Chagit);%%%%ARRGRRRRRRGRGRGRRGGR!!!          %unique all the distances
 unique_corrs = squeeze(Corr_Per_Breath(ReferenceChannel,:));
 
 for i=1:length(unique_final_distance)
     a=find(unique_final_distance(i)==distance_Chagit);                            %find where distance equal all the successive unique distances
     for ii=1:length(a)
-        unique_corrdist(ii)=(unique_corrs(a(ii)));   %link the distances to their correlations
+        unique_corrdist(ii)=(unique_corrs(a(ii)));   %link the distances to their correlations       
     end
     aveunique_corrdist(i) = mean(unique_corrdist);
+    clear a;
 end
 
 corrs_distances = [aveunique_corrdist; unique_final_distance]; %2 column vectors with correlations and distances, for scatter plotting
