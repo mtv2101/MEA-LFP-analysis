@@ -13,11 +13,12 @@ dead_chans = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
 
 base_mode = 1; 
 % 0 = normalizes to average baseline power in each band individaully
-% 1 = normalizes to average baseline power in each band individaully, and sets all baseline specs to zero
-% 2 = normalizes to max baseline power of all gamma freq bands
-% 3 = normalizes to max baseline power averaged over gamma freq bands
-% 4 = normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range
-% 5 = normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range after db normalization
+% 1 = normalizes to stdev of baseline power in each band individaully, and sets all baseline specs to zero
+% 2 = normalizes to mean baseline power in each band individaully, and sets all baseline specs to zero
+% 3 = normalizes to max baseline power of all gamma freq bands
+% 4 = normalizes to max baseline power averaged over gamma freq bands
+% 5 = normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range
+% 6 = normalizes to average baseline power in each band individaully, and also adjusts for band dynamic range after db normalization
 
 % upload the breath file - "breaths" in workspace
 [datafile, pathname] = uigetfile(...
