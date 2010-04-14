@@ -11,7 +11,7 @@ dead_chans = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];
              %1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2 3 4 5 6 7 8 9 1 1 2   
 %sigtype = 0; %0 gives mean power, 1 gives max power
 
-base_mode = 1; 
+base_mode = 1; %current favorite base_mode is #1
 % 0 = normalizes to average baseline power in each band individaully
 % 1 = normalizes to stdev of baseline power in each band individaully, and sets all baseline specs to zero
 % 2 = normalizes to mean baseline power in each band individaully, and sets all baseline specs to zero
@@ -63,7 +63,7 @@ for odor = eventcodes;
     aveallgamma_allodors(:,:,:,odor) = aveallgamma;
     sig_breaths_allodors(:,:,odor) = sig_breaths;
     save(['spec_odor' num2str(odor)], 'spec_all');
-    clear spec_all;
+    clear spec;
     save(['spec_norm_odor' num2str(odor)], 'spec_norm');
     clear spec_norm;
     save(['wave_segs' num2str(odor)], 'wave_segs');

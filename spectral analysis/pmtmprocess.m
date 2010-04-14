@@ -24,14 +24,14 @@ elseif base_mode == 1 %base_mode=1 normalizes to average baseline power to the s
         a = squeeze(mean(spec(:,i,:,:),1)); %average power for each frequency band (ave over time)
             b = squeeze(mean(a(:,baseline),2)); %average this over baseline breaths
             fmean(i) = mean(b); %average over all trials
-        spec_norm1(:,i,:,:) = spec(:,i,:,:)-fmean(i); %subtract each value from the baseline pop average at that frequency
-            std1 = spec_norm(:,i,:,baseline);
+        spec_norm(:,i,:,:) = spec(:,i,:,:)-fmean(i); %subtract each value from the baseline pop average at that frequency
+            std1 = squeeze(spec_norm(:,i,:,baseline));
             base_std(i) = std(std1(:));
-        spec_norm2(:,i,:,:) = 10.*(log10((spec_norm1(:,i,:,:)./base_std(i)))); %normalize freq band to baseline pop stdev - express as dB change
-            c = squeeze(mean(spec_norm2(:,i,:,:),1)); %average power for each frequency band (ave over time)
+        spec_norm(:,i,:,:) = 10.*(log10((spec_norm(:,i,:,:)/base_std(i))+100)); %normalize freq band to baseline pop stdev - express as dB change, add 100 to take log of positive number
+            c = squeeze(mean(spec_norm(:,i,:,:),1)); %average power for each frequency band (ave over time)
             d = squeeze(mean(c(:,baseline),2)); %average this over baseline breaths
             fnorm_mean(i) = mean(d); %average over all trials, this is a second calculation of the baseline pop average, just after normalization
-        spec_norm(:,i,:,:) = spec_norm2(:,i,:,:)-fnorm_mean(i); %subtract average of baseline region per freq, bring baseline average to zero
+        spec_norm(:,i,:,:) = spec_norm(:,i,:,:)-fnorm_mean(i); %subtract average of baseline region per freq, bring baseline average to zero
     end
     
 elseif base_mode == 2 %base_mode=1 normalizes to average baseline power in each band individaully, and sets all baseline specs to zero
