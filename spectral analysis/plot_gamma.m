@@ -18,7 +18,7 @@ tdt_map = [8,16,24,32;...
 
 rows = 8;
 cols = 4;
-odor = 2;
+odor = 1;
 
 aveallgamma = aveallgamma_allodors(:,:,:,odor);
 sig_breaths = sig_breaths_allodors(:,:,odor);

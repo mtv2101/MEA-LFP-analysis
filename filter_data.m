@@ -5,7 +5,7 @@ function data_filtered= filter_data(data,sampFreq,filttype,filtorder)
 %band which for gamma, will always be 2
 %the output is data_filtered, which is the filtered data in a 4-d matrix
 
-for Chan =1:length(data(1,1,1,:))                       %go through all chanels
+for Chan =1:length(data(1,1,1,:))                       %go through all channels
     for i=1:length(data(1,:,1,1))                       %go through all events
         for j=1:length(data(1,1,:,1))                   %go through all breaths
             data_filtered(:,i,j,Chan)=SinoFilt(data(:,i,j,Chan),sampFreq,filttype,filtorder);    %filter the data
