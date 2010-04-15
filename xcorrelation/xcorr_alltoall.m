@@ -1,4 +1,4 @@
-function[Corr_Per_Breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
+function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
 
 %function outputs the zerolag correlation per breath, (averaging along
 %events) in the matrix Corr_Per_Breath(32X32X11 matrix, last dimension is the number of breaths). It is for plotting correlations
@@ -21,10 +21,9 @@ for breath=1:size(data,3)     %go over all breaths
             newmatrix(:,:,x) = finalcorr(:,(m):(m+(LastChannel-FirstChannel)));
             m=m+((LastChannel-FirstChannel)+1);
         end
-        Corr_Per_Event(:,:,event)= newmatrix(qq,:,:);   %Check from here, supposed to get the zerolag correlation for all channels, per reference channel, per event
+        corr_event(:,:,event)= newmatrix(qq,:,:);   %Check from here, supposed to get the zerolag correlation for all channels, per reference channel, per event
         t9=etime(clock,t7)
     end
-    Corr_Per_Breath(:,:,:,breath)=Corr_Per_Event;
-    %Corr_Per_Breath(:,:,breath)=mean(Corr_Per_Event,3); %average over all events to get the breath correlations
+    corr_breath(:,:,:,breath)=corr_event;
 end
 end

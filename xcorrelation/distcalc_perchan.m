@@ -15,12 +15,12 @@ else
     important_variable=0;
 end
 
-j=ReferenceChannel,
-    for  n=FirstChannel:LastChannel,
-        if ((all(n~=DeadChannel)==1) && ((all(j~=DeadChannel)==1)))
-            distance_Chagit(:,n-important_variable,1) = sqrt(...
-                (coordinates(j,1)-coordinates(n,1))^2+(coordinates(j,2)-coordinates(n,2))^2);%take the coordinates in Excel, and calculates the distances uses the distance formula
-        else
-            distance_Chagit(:,n-important_variable,j-important_variable)=-1;%set all deadchannel distances to be -1
-        end
+j=ReferenceChannel;
+for  n=FirstChannel:LastChannel,
+    if ((all(n~=DeadChannel)==1) && ((all(j~=DeadChannel)==1)))
+        distance_Chagit(:,n-important_variable,1) = sqrt(...
+            (coordinates(j,1)-coordinates(n,1))^2+(coordinates(j,2)-coordinates(n,2))^2);%take the coordinates in Excel, and calculates the distances uses the distance formula
+    else
+        distance_Chagit(:,n-important_variable,j-important_variable)=-1;%set all deadchannel distances to be -1
     end
+end

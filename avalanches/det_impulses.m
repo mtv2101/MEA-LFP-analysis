@@ -1,5 +1,4 @@
-%function [imps] = det_impulses(wave_segs)
-%imps are 32 vectors of the waveform impulse magnitude in sequential time bins
+%function [allpeaks all_peakslin] = det_impulses(wave_segs)
 
 srate = 3051.76; %sample rate
 data_filt = single(filter_data(wave_segs,3051.76,[40 100],200));
@@ -22,11 +21,9 @@ for n = 1:size(data_filt,4);
     a = reshape(peaks_t,data_dims(1),data_dims(2),data_dims(3));
     all_pkslin(:,n) = peaks_t;
     all_pks(:,:,:,n) = a;
-    save(['peaks_chan' num2str(n)], 'peaks');
+    %save(['peaks_chan' num2str(n)], 'peaks');
     clear peaks_t;
     disp('site'); disp(n);
 end
 save(['allpeaks'], 'all_pks');
 save(['all_peakslin'], 'all_pkslin');
-
-%scatter(imps1,imps2,'.');hold on;plot(1:max(imps1(:,3)),'r');

@@ -25,7 +25,7 @@ if ((DeadChannel<=LastChannel) & (DeadChannel>=FirstChannel))
 end
 
 [distance_Chagit]=distcalc_perchan(coordinates,FirstChannel, LastChannel, ReferenceChannel,DeadChannel);    %calculates distance with respect to reference channel
-unique_final_distance=unique(distance_Chagit);%%%%ARRGRRRRRRGRGRGRRGGR!!!          %unique all the distances
+unique_final_distance=unique(distance_Chagit);        %unique all the distances
 unique_corrs = squeeze(Corr_Per_Breath(ReferenceChannel,:));
 
 for i=1:length(unique_final_distance)
