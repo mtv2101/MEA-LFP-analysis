@@ -1,11 +1,10 @@
-%allcorrs =
-%2    32    30    32
+% input: corr_breath = [channels, channels, events, breaths]
+
 events = size(corr_breath,3);
 breaths = size(corr_breath,4);
 basebreaths = 1:11;
 odorbreaths = 12:14;
 postbreaths = 15:30;
-% Corr_Per_Breath = [channels, channels, events, breaths]
 
 all_distances = sort(unique(distcalc_perchan(coordinates,1,32,1,33)));
 allcorrs = nan(2,length(all_distances),size(corr_breath,4),size(corr_breath,1),size(corr_breath,3));
@@ -18,13 +17,10 @@ for e = 1:size(corr_breath,3); %for each event
             for m = 1:size(corrs_distances,2);
                 dist_remap = [dist_remap; find(corrs_distances(2,m) == all_distances)]; 
             end;
-            %size(allcorrs(:,dist_remap,b,chan)), size(corrs_distances),
-            allcorrs(:,dist_remap,b,chan,e) = corrs_distances;
+            allcorrs(:,dist_remap,b,chan,e) = corrs_distances; %allcorrs = [2 25 31 32 16]
         end
     end
 end
-
-%allcorrs_meanevents = mean(allcorrs,5);
 distances = allcorrs(2,:,1,1);
 
 figure
