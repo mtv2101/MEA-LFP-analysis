@@ -1,5 +1,7 @@
 function [sig_breaths,sig_vals,cis,all_spec] = test_breathsig(spec_norm,brthindx,g_freqs);
 
+%input: "spec_norm" is [time, freq, trials, breaths], defined per channel
+
 baseline = find(brthindx <= 0); %get all breaths before stimilus (stim triggered on breath 0, so event occurs on next breath)
 signal = find(brthindx >= 1); %get all breaths after stimilus
 alpha = .05;

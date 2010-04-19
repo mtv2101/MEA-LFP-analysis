@@ -1,7 +1,7 @@
 clear all;
 
 % Define Global VARS
-eventcodes = [1 2 3];
+eventcodes = [1 2 3 4 5];
 srate = 3051.76;  %Hz
 winsize = .5;
 brthindx = [-10:1:20];
