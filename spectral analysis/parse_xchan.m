@@ -58,7 +58,7 @@ for odor = eventcodes;
         disp('site'); disp(n);
         spec_all(:,:,:,:,n) = spec;
         [spec_norm(:,:,:,:,n) aveallgamma(:,:,n)] = pmtmprocess(spec,f,brthindx,base_mode,g_freqs);
-        [sig_breaths(:,n),sig_vals(:,n),cis(:,:,n),all_spec(:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
+        [sig_breaths(:,n),sig_vals(:,n),cis(:,:,n),all_specmax(:,:,n)] = test_breathsig(spec_norm(:,:,:,:,n),brthindx,g_freqs);
     end
     aveallgamma_allodors(:,:,:,odor) = aveallgamma;
     sig_breaths_allodors(:,:,odor) = sig_breaths;
