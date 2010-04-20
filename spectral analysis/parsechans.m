@@ -1,4 +1,4 @@
-function [wave_segs] = parsechans(wave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
+%function [wave_segs] = parsechans(wave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
 
 %INPUTS:
 % -- "events" matrix containing vectors with event time(in sec) 1st dim,
@@ -23,21 +23,21 @@ sel_events = find(tdt_allevents(:,2) == odor);
 if max(sel_events,[],1) == size(events,1); % don't pick last trial (this leads to overflow errors)
     sel_events = sel_events(1:(length(sel_events)-1)); %cut out last event because the experiment is often ended before a sufficient number of breaths are recorded after this event
 end
-
 for a = eventcodes;
     b = find(tdt_allevents(:,2) == a);
     c(a) = length(b);
     clear b;
 end
 min_trials = min(c); %this is the lowest number of trials of an event type, set all trial num to this and exclude trials occuring aferwards
+if length(sel_events)>min_trials % if this event type has as ton of trials
+    xx = randperm(length(sel_events)); % use randomly picked trials
+    sel_events_short = sel_events(xx(:,1:min_trials));
+else
+    sel_events_short = sel_events(1:min_trials);
+end
+sel_events_short = sort(sel_events_short); %resort events back into chronological order
 
-for i=1:min_trials; %arbitrary number of trials    
-    if length(sel_events)>min_trials % if this event type has as ton of trials
-        xx = randperm(length(sel_events)); % use randomly picked trials
-        sel_events_short = sel_events(xx(:,1:min_trials));
-    else
-        sel_events_short = sel_events(1:min_trials);
-    end    
+for i=1:min_trials; %arbitrary number of trials
     a = find((tdt_allevents(sel_events_short(i),1)-seek_time) <= tdt_breaths & tdt_breaths <= (tdt_allevents(sel_events_short(i),1)+seek_time));
     if length(a) ~= 1 %sometimes the search for breaths matching events returns two breaths.  This happens during abnormally quick respiration.  Eliminate the second one
         a = a(1);
@@ -49,7 +49,7 @@ for i=1:min_trials; %arbitrary number of trials
     winend = int32(brth+win_time+win_offset); %in tdt samples
     if i==1;
         win_final = winend-winstart; %a bug occurs rarely where the int32 of the window creates a size mismatch between trials.  "winfinal" is the template size to maintain over all trials.
-    end  
+    end
     wave_segs(:,i) = wave(winstart:(winstart+win_final));
 end
-end
+%end

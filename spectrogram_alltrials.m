@@ -1,11 +1,12 @@
 % must load desired "spec_norm" and "f" matrix for this script to run
 % spec_norm is [time,freqs,trials,breaths]
 
+data = spec_norm;
 channel = 11;
-gamma = [40 100];
+gamma = [10 100];
 g_freqs = find(f>gamma(1) & f<gamma(2));
 
-allspecs = spec_norm(:,g_freqs,:,:,channel);
+allspecs = data(:,g_freqs,:,:,channel);
 for t = 1:size(allspecs,3)
     for b = 1:size(allspecs,4)
         if b == 1
@@ -17,10 +18,10 @@ for t = 1:size(allspecs,3)
     allspecs_alltrials(:,:,t) = allspecs_mergebreaths;
 end
 
-spec_max = squeeze(max(max(max(max(spec_norm(:,g_freqs,:,:))))));
-spec_min = squeeze(min(min(min(min(spec_norm(:,g_freqs,:,:))))));
+spec_max = squeeze(max(max(max(max(data(:,g_freqs,:,:,channel))))));
+spec_min = squeeze(min(min(min(min(data(:,g_freqs,:,:,channel))))));
 
-for x = 1:size(spec_norm,3) %for all trials
-    subplot(size(spec_norm,3),1,x);
+for x = 1:size(data,3) %for all trials
+    subplot(size(data,3),1,x);
     imagesc(allspecs_alltrials(:,:,x)', [spec_min spec_max]);
 end
