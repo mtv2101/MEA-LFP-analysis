@@ -1,4 +1,4 @@
-%function [wave_segs] = parsechans(wave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
+function [wave_segs] = parsechans(wave,events,breaths,srate,odor,brth_num,winsize,eventcodes)
 
 %INPUTS:
 % -- "events" matrix containing vectors with event time(in sec) 1st dim,
@@ -52,4 +52,4 @@ for i=1:min_trials; %arbitrary number of trials
     end
     wave_segs(:,i) = wave(winstart:(winstart+win_final));
 end
-%end
+end
