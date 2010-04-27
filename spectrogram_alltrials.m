@@ -1,8 +1,8 @@
 % must load desired "spec_norm" and "f" matrix for this script to run
 % spec_norm is [time,freqs,trials,breaths]
-
+figure
 data = spec_norm;
-channel = 11;
+channel = 13;
 gamma = [10 100];
 g_freqs = find(f>gamma(1) & f<gamma(2));
 
@@ -20,8 +20,13 @@ end
 
 spec_max = squeeze(max(max(max(max(data(:,g_freqs,:,:,channel))))));
 spec_min = squeeze(min(min(min(min(data(:,g_freqs,:,:,channel))))));
+spec_std1 = data(:,g_freqs,:,:,channel);
+spec_std = std(spec_std1(:));
 
 for x = 1:size(data,3) %for all trials
-    subplot(size(data,3),1,x);
-    imagesc(allspecs_alltrials(:,:,x)', [spec_min spec_max]);
+    subplot(size(data,3),1,x,'align');
+    imagesc(allspecs_alltrials(:,:,x)', [spec_std*-1 spec_std*5]);
+    axis off;
+    axis tight;
+    h = colorbar;
 end

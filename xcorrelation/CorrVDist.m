@@ -16,6 +16,11 @@ function[corrs_distances]= CorrVDist(Corr_Per_Breath,coordinates,FirstChannel,La
 %Deadchannel-Vector or scalar with all deadchannels, if no deadchannels put
 %a number that is not between 1 and 32
 
+chans = 1:32;
+coors1 = repmat([0:200:600], [8 1]);
+coors2 = repmat([0:200:1400]', [4 1]);
+coordinates = [coors1(:) coors2];
+
 if ((ReferenceChannel>LastChannel) | (ReferenceChannel<FirstChannel))
         error('Reference Channel Should Be Between First and Last Channel')
 end

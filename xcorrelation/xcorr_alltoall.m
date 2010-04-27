@@ -10,9 +10,10 @@ function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,fil
 %filtorder is order for SimoFilt.m, 200 typically works best for gamma
 data_filtered = filter_data(data,sampFreq,filttype,filtorder);
 
+t0=clock;
 for breath=1:size(data,3)     %go over all breaths
     for event=1:size(data,2)      %go through all events
-       t7=clock;
+       t1=clock;
         segs = squeeze(data_filtered(:,event,breath,:));
         finalcorr = xcorr(segs,'coeff');
         [qq,ww] = size(segs);
@@ -22,7 +23,8 @@ for breath=1:size(data,3)     %go over all breaths
             m=m+((LastChannel-FirstChannel)+1);
         end
         corr_event(:,:,event)= newmatrix(qq,:,:);   %Check from here, supposed to get the zerolag correlation for all channels, per reference channel, per event
-        t9=etime(clock,t7)
+        t2=etime(clock,t1);
+        ['xcorr_alltoall will complete in t - ', num2str(t2*size(data,3)*size(data,2)-etime(t1,t0)), ' seconds.  Go get some coffee']
     end
     corr_breath(:,:,:,breath)=corr_event;
 end

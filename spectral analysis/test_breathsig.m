@@ -11,7 +11,7 @@ alpha = .05;
 %     all_mean = squeeze(mean(spec_norm(:,g_freqs,:,:),1));
 %     all_gmean = squeeze(mean(all_mean,1));
 %     for i=1:size(all_gmean,2) %for each breath
-%         [sig_breaths(i,n),sig_vals(i,n),cis(i,:,n)] = ttest2(all_gmean(:,i),base_gmean(:),.01,'both','unequal'); %do one-tailed t-test
+%         [sig_breaths(i,n),sig_vals(i,n),cis(i,:,n)] = ttest2(all_gmean(:,i),base_gmean(:),alpha/size(all_gmean,2),'both'); %do two-tailed t-test
 %     end
 %     all_spec = all_gmean;
 
