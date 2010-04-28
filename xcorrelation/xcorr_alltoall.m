@@ -24,7 +24,7 @@ for breath=1:size(data,3)     %go over all breaths
         end
         corr_event(:,:,event)= newmatrix(qq,:,:);   %Check from here, supposed to get the zerolag correlation for all channels, per reference channel, per event
         t2=etime(clock,t1);
-        ['xcorr_alltoall will complete in t - ', num2str(t2*size(data,3)*size(data,2)-etime(t1,t0)), ' seconds.  Go get some coffee']
+        disp('xcorr_alltoall will complete in t - ', num2str(t2*size(data,3)*size(data,2)-etime(t1,t0)), ' seconds.  Go get some coffee');
     end
     corr_breath(:,:,:,breath)=corr_event;
 end
