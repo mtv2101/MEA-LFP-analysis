@@ -18,7 +18,7 @@ inc = floor(dt*srate/1000); %increment window this much
 
 data_filt = single(filter_data(wave_segs,srate,filtwin,200));
 for n = 1:size(data_filt,4);
-    dat = squeeze(data_filt(:,breaths,:,n));
+    dat = squeeze(data_filt(:,:,breaths,n));
     dat_lin(:,n) = dat(:);
 end
 
@@ -26,7 +26,6 @@ t = 100:inc:size(dat_lin,1);
 s(chans) = nanstd(dat_lin(:,chans))*thresh;
 
 allpeaks = NaN(length(t),length(chans));
-sorted_peaks = allpeaks;
 for x = 2:length(t)
     for n = chans
         window(:,n) = dat_lin((t(x-1)):t(x),n);
@@ -40,14 +39,13 @@ for x = 2:length(t)
             dat_dif(:,n) = conv(kernal,dat_dif2(:,n)); %convolve to isolate zero-crossings
             peaks = find(dat_dif(:,n)); %return non-zero indices
             maxpeaks(n) = max(window(peaks,n),[],1); %values of max peaks
-            minpeaks(n) = min(window(peaks,n),[],1); %values of min peaks            
+            minpeaks(n) = min(window(peaks,n),[],1); %values of min peaks 
         end
         allpeaks(x,:) = maxpeaks;
     else 
         allpeaks(x,:) = NaN;
     end
     x
-    sorted_peaks(x,:) = sort(allpeaks(x,:),'descend');
 end
 
 av_size1 = sum(allpeaks,2);
