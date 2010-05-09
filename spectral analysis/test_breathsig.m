@@ -20,7 +20,7 @@ base_gmax = squeeze(max(base_max,[],1));
 all_max = squeeze(max(spec_norm(:,g_freqs,:,:),[],1));
 all_gmax = squeeze(max(all_max,[],1));
 for i=1:size(all_gmax,2) %for each breath
-    [sig_breaths(i),sig_vals(i),cis(i,:)] = ttest2(all_gmax(:,i),base_gmax(:),alpha/size(all_gmax,2),'both'); %do two-tailed t-test, use bonferroni correction for n=all breaths
+    [sig_breaths(i),sig_vals(i),cis(i,:)] = ranksum(all_gmax(:,i),base_gmax(:),alpha/size(all_gmax,2)); %do two-tailed t-test, use bonferroni correction for n=all breaths
 end
 all_spec = all_gmax;
 end
