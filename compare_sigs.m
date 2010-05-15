@@ -15,7 +15,7 @@ cols = 4;
 
 sum_sigs = squeeze(sum(sig_breaths_allodors(:,:,:,:),1)); %sig_breaths_allodors dimensions (breaths,sigtype,channel,event_type)
 
-% 
+%
 % for i=1:numodors
 %     for x=1:rows
 %         for y=1:cols
@@ -27,15 +27,28 @@ sum_sigs = squeeze(sum(sig_breaths_allodors(:,:,:,:),1)); %sig_breaths_allodors 
 %     hold on;
 % end
 
-for x=1:rows
-    for y=1:cols
-        indx = tdt_map(x,y);
-        subplot(rows,cols,(x*cols)-cols+y,'align');
-        plot(sum_sigs(indx,:));
+for f = 1:size(sig_breaths_allodors,3)
+    max_sig = max(max(sum_sigs));
+    figure
+    for x=1:rows
+        for y=1:cols
+            indx = tdt_map(x,y);
+            sig_image(x,y) = sum_sigs(indx,f);
+        end
     end
+    imagesc(sig_image, [0 max_sig]);colorbar;
 end
 
-% for h=1:numodors 
+% figure
+% for x=1:rows
+%     for y=1:cols
+%         indx = tdt_map(x,y);
+%         subplot(rows,cols,(x*cols)-cols+y,'align');
+%         plot(sum_sigs(indx,:));
+%     end
+% end
+
+% for h=1:numodors
 % subplot(numodors,1,h);imagesc(squeeze(sig_breaths_allodors(:,:,h)));
 % hold on;
 % end

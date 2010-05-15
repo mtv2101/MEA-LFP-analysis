@@ -1,4 +1,4 @@
-function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
+%function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
 
 %function outputs the zerolag correlation per breath, (averaging along
 %events) in the matrix Corr_Per_Breath(32X32X11 matrix, last dimension is the number of breaths). It is for plotting correlations
@@ -8,6 +8,8 @@ function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,fil
 %SampFreq is the sampling frequency, in our case 3051.76
 %filttype= filttype for sinofilt.m specifies frequency band e.g. [40 100]
 %filtorder is order for SimoFilt.m, 200 typically works best for gamma
+
+corr_win = 30; %window in which to find max correlation, in samples
 data_filtered = filter_data(data,sampFreq,filttype,filtorder);
 
 t0=clock;
@@ -18,14 +20,18 @@ for breath=1:size(data,3)     %go over all breaths
         finalcorr = xcorr(segs,'coeff');
         [qq,ww] = size(segs);
         m=1;
-        for x=1:((LastChannel-FirstChannel)+1)          % we are referencing every channels correlation into a separated third dimension
+        for x=1:((LastChannel-FirstChannel)+1)% we are referencing every channels correlation into a separated third dimension
             newmatrix(:,:,x) = finalcorr(:,(m):(m+(LastChannel-FirstChannel)));
             m=m+((LastChannel-FirstChannel)+1);
         end
-        corr_event(:,:,event)= newmatrix(qq,:,:);   %Check from here, supposed to get the zerolag correlation for all channels, per reference channel, per event
+        corr_event(:,:,event) = squeeze(max(newmatrix((qq-corr_win/2):(qq+corr_win/2),:,:),[],1));%get max correlation in window around time zero
+        [C max_index] = squeeze(max(newmatrix,[],1));
+        max_index = squeeze(max_index)-qq;
+        corrtime_event(:,:,event) = max_index;
         t2=etime(clock,t1);
         ['xcorr_alltoall will complete in t - ', num2str(t2*size(data,3)*size(data,2)-etime(t1,t0)), ' seconds.  Go get some coffee']
     end
     corr_breath(:,:,:,breath)=corr_event;
+    corrtime_breath(:,:,:,breath)=corrtime_event;
 end
-end
+%end
