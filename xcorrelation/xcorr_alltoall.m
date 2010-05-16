@@ -1,4 +1,4 @@
-%function[corr_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
+function[corr_breath corrtime_breath]= xcorr_alltoall(data,FirstChannel,LastChannel,sampFreq,filttype,filtorder)
 
 %function outputs the zerolag correlation per breath, (averaging along
 %events) in the matrix Corr_Per_Breath(32X32X11 matrix, last dimension is the number of breaths). It is for plotting correlations
@@ -25,7 +25,7 @@ for breath=1:size(data,3)     %go over all breaths
             m=m+((LastChannel-FirstChannel)+1);
         end
         corr_event(:,:,event) = squeeze(max(newmatrix((qq-corr_win/2):(qq+corr_win/2),:,:),[],1));%get max correlation in window around time zero
-        [C max_index] = squeeze(max(newmatrix,[],1));
+        [C max_index] = max(newmatrix,[],1);
         max_index = squeeze(max_index)-qq;
         corrtime_event(:,:,event) = max_index;
         t2=etime(clock,t1);
@@ -34,4 +34,4 @@ for breath=1:size(data,3)     %go over all breaths
     corr_breath(:,:,:,breath)=corr_event;
     corrtime_breath(:,:,:,breath)=corrtime_event;
 end
-%end
+end

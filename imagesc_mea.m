@@ -1,4 +1,4 @@
-function imagesc_mea(specs, spec_min, spec_max);
+function imagesc_mea(specs,spec_min,spec_max);
 
 tdt_map = [8,16,24,32;...
     7,15,23,31;...
@@ -17,10 +17,21 @@ if nargin == 1;
     spec_min = min(min(min(specs)));
 end
 
-for x=1:rows
-    for y=1:cols
-        indx = tdt_map(x,y);
-        subplot(rows,cols,(x*cols)-cols+y,'align');
-        imagesc(specs(:,:,indx), [spec_min spec_max]);
+if ndims(specs)==3
+    for x=1:rows
+        for y=1:cols
+            indx = tdt_map(x,y);
+            subplot(rows,cols,(x*cols)-cols+y,'align');
+            imagesc(specs(:,:,indx), [spec_min spec_max]);
+        end
     end
+end
+if ndims(specs)==2 & size(specs,2) == rows*cols %if specs is a [1,32] vector
+    for x=1:rows
+        for y=1:cols
+            indx = tdt_map(x,y);
+            mea_image(x,y) = specs(indx);
+        end
+    end
+    imagesc(mea_image, [spec_min spec_max]);
 end
