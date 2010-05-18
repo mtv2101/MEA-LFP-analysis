@@ -41,6 +41,30 @@ end
 [pathname] = uipickfiles('refilter', '\.mat$', 'type', {'*.mat', 'MAT-files'},...
     'prompt', 'Select all .mat files from MEA channels', 'output', 'cell');
 
+
+tdt_allevents(:,1) = (events(:,1)*srate);
+tdt_allevents(:,2) = events(:,2);
+for odor = eventcodes;  
+    sel_events = find(tdt_allevents(:,2) == odor);
+    if max(sel_events,[],1) == size(events,1); % don't pick last trial (this leads to overflow errors)
+        sel_events = sel_events(1:(length(sel_events)-1)); %cut out last event because the experiment is often ended before a sufficient number of breaths are recorded after this event
+    end
+    for a = eventcodes;
+        b = find(tdt_allevents(:,2) == a);
+        c(a) = length(b);
+        clear b;
+    end
+    min_trials = min(c); %this is the lowest number of trials of an event type, set all trial num to this and exclude trials occuring aferwards
+    if length(sel_events)>min_trials % if this event type has as ton of trials
+        xx = randperm(length(sel_events)); % use randomly picked trials
+        sel_events_short = sel_events(xx(:,1:min_trials));
+    else
+        sel_events_short = sel_events(1:min_trials);
+    end
+    sel_events_all(:,odor) = sort(sel_events_short); %resort event indices back into chronological order
+    clear sel_events sel_events_short a c
+end
+
 for odor = eventcodes;
     disp('odor'); disp(odor);
     for n = 1:length(pathname); %n to number of selected channels 
@@ -49,7 +73,7 @@ for odor = eventcodes;
         end
         load(pathname{n}); % name of imported data must be "wave"
         for x = 1:length(brthindx) %x to num of breaths
-            wave_segs(:,:,x,n) = parsechans(wave,events,breaths,srate,odor,brthindx(x),winsize,eventcodes);
+            wave_segs(:,:,x,n) = parsechans(wave,events,breaths,srate,sel_events_all(:,odor),winsize,brthindx(x));
             [S, t, f] = pmtm_cust(squeeze(wave_segs(:,:,x,n)),srate,maxfreq);
             spec(:,:,:,x) = S; clear S; %spec = (time, freq, trial, breath)
             %disp('breath'); disp(x);
