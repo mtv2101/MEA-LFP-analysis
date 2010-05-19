@@ -3,11 +3,20 @@
 %band which for gamma, will always be 2
 %the output is data_filtered, which is the filtered data in a 4-d matrix
 %-----comment above by Matt Valley
+<<<<<<< HEAD
 %Armen Enikolopov 5/18/2010
 %  rewrote this so as to avoid 3 nested for loops 
 %  by reshaping 4D matrix to a 2D matrix
 %  a ~10x speed increase is achieved when used on current data.
 
+=======
+
+%Armen Enikolopov 5/18/2010
+%  rewrote this so as to avoid 3 nested for loops 
+%  by reshaping 4D matrix to a 2D matrix
+%  a ~10x speed increase is achieved when used on current data.
+
+>>>>>>> 692f5f229b8f2b1618988979fa0cbb7f802ea88f
 function data_filtered= filter_data(data,sampFreq,filttype,filtorder)
     orig_size = size(data);
     % new shape is [time x (event*breath*chan)]
